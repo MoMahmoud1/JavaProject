@@ -72,7 +72,6 @@ public class OneHundreds {
         }
     }
 
-
     /**
      * get the winner every round
      * @param playerList  players list
@@ -88,6 +87,59 @@ public class OneHundreds {
         }
         return winnerPlayer;
     }
+    /** Method used to retrieve the results of a singular round to the client
+     * @return resultsOutput The ArrayList that holds strings of information to be sent to the client
+     * */
+    public ArrayList<String> displayRoundResults(){
+        Card lowestValuedWildCard = null;
+        resultsOutput.clear();
+
+        if (wildCardsInRound.size() > 0) {
+            lowestValuedWildCard = wildCardsInRound.get(0);
+            if (wildCardsInRound.size() > 1) {
+                for (Card wildCard : wildCardsInRound) {
+                    if (wildCard.getValue() < lowestValuedWildCard.getValue()) {
+                        lowestValuedWildCard.setWildCard(true);
+                    }
+                }
+            }
+        }
+        int winningPlayerIndex = 0;
+        if (lowestValuedWildCard == null) {
+            Card highestCardInRound = cardsPlayedInRound.get(0);
+            for (Card card : cardsPlayedInRound) {
+                if (card.getValue() > highestCardInRound.getValue()) {
+                    highestCardInRound = card;
+                }
+            }
+            winningPlayerIndex = cardsPlayedInRound.indexOf(highestCardInRound);
+        } else {
+            winningPlayerIndex = cardsPlayedInRound.indexOf(lowestValuedWildCard);
+        }
+
+
+        String winningPlayerName = players.get(winningPlayerIndex);
+        if (currentPlayer == 0) {
+            scores.put(winningPlayerName, scores.get(winningPlayerName) + 1);
+        }
+        resultsOutput.add("");
+        for(int i = 0; i < 4; i++){
+            resultsOutput.add(players.get(i) + ": " + cardsPlayedInRound.get(i).getValue() + " " + cardsPlayedInRound.get(i).isWildCard());
+        }
+        resultsOutput.add("");
+        resultsOutput.add(winningPlayerName + " has won the hand");
+        resultsOutput.add("");
+        if (currentPlayer == 3){
+            cardsPlayedInRound.clear();
+            wildCardsInRound.clear();
+            currentPlayer = 0;
+        } else {
+            currentPlayer++;
+        }
+
+        return resultsOutput;
+    }
+
 
     /**
      * update the winner score
