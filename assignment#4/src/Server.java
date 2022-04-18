@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
  */
 public class Server {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         while(true) {
             // Local variables/objects used for the server/ServerClientSocket threads
              //portNumber - the port number which the server listens on

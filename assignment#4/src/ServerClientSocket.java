@@ -42,7 +42,7 @@ public class ServerClientSocket implements Runnable{
         System.out.println(Thread.currentThread().getName());
         outputLine = "Welcome to One Hundreds! Please enter your name:";
         this.out.println(outputLine);
-        String name = "";
+        String name ;
         while ((inputLine = this.in.readLine()) != null) {
 
                 name = inputLine;
@@ -141,9 +141,9 @@ public class ServerClientSocket implements Runnable{
                 if (game.players.size() == 4) {
                     game.gameState = "deal";
                 }
-                String playerString = "";
+                StringBuilder playerString = new StringBuilder();
                 for (String player : game.players) {
-                    playerString += player + ", ";
+                    playerString.append(player).append(", ");
                 }
                 System.out.println("Players: " + playerString);
             }
@@ -234,11 +234,7 @@ public class ServerClientSocket implements Runnable{
                     Thread.sleep(500);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | InterruptedException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
