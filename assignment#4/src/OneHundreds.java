@@ -21,13 +21,13 @@ public class OneHundreds {
         ArrayList<String> resultsOutput = new ArrayList<>();
 
     /**
-     * dealing the card for player
-     * @param player get player name
-     * @return  card for the player
+     *
+     * @return
+     * @throws InterruptedException
      */
-    public Card dealCard(String player ) throws IOException {
+    public Card dealCard(String player) throws InterruptedException {
         while(true) {
-            Card card = null;
+            Card card ;
             if (cardDeck.CardsRemaining(deck) > 0) {
                 System.out.println("hello " + Thread.currentThread().getName());
                 card = deck.get(0);
@@ -41,8 +41,8 @@ public class OneHundreds {
                 return card;
             }
         }
-    }
 
+    }
     /**
      * remove card from player
      * @param playerList player list
@@ -139,7 +139,55 @@ public class OneHundreds {
 
         return resultsOutput;
     }
+    public ArrayList<String> displayGameResults(){
+        resultsOutput.clear();
+        resultsOutput.add("=== End of Game ===");
+        resultsOutput.add("Scores");
+        displayScores();
 
+        if (currentPlayer == 0) {
+            determineWinners();
+        }
+
+//        resultsOutput.add("");
+        if (winners.size() > 1){
+            //System.out.println("\nWinners: ");
+            String outputLine = "Winners: ";
+//            out.println(outputLine);
+            resultsOutput.add(outputLine);
+            int counter = 0;
+            for (String winner: winners) {
+                if (counter != winners.size() - 1) {
+                    //System.out.print(winner + ", ");
+                    outputLine += winner + ", ";
+                } else {
+                    //System.out.print(winner + "\n");
+                    outputLine += winner;
+                }
+                counter++;
+            }
+            resultsOutput.add(outputLine);
+        } else {
+            String outputLine = "Winner: " + winners.get(0);
+            resultsOutput.add(outputLine);
+            //System.out.println("\nWinner: " + winners.get(0));
+        }
+
+        String outputLine = "Score: " + scores.get(winners.get(0));
+        resultsOutput.add(outputLine);
+        //System.out.println("Score: " + scores.get(winners.get(0)));
+
+        displayRemainingCards();
+
+        if (currentPlayer == 3) {
+            currentPlayer = 0;
+            currentRound++;
+            gameState = "postGame";
+        } else {
+            currentPlayer++;
+        }
+        return resultsOutput;
+    }
 
     /**
      * update the winner score
@@ -156,53 +204,38 @@ public class OneHundreds {
         System.out.println("Player "+wins.getName()+" Gets A point ");
     }
 
-    /**
-     * get winner
-     * @param scoreMap a score hashmap
-     * @param finalMaxScore final max score
-     * @return a list of final winner
-     */
-    public static List<String> getFinalWinner(Map<String, Integer> scoreMap, int finalMaxScore){
-        List<String> finalWinners = new ArrayList<>();
-        Set<String> playersName = scoreMap.keySet();
-        for (String playerName: playersName
-        ) {
-            if(scoreMap.get(playerName) == finalMaxScore){
-                finalWinners.add(playerName);
+    /** Method used to determine the winner(s) of the game */
+    public void determineWinners(){
+        int winningScore = Collections.max(scores.values());
+        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+            if (entry.getValue()==winningScore) {
+                winners.add(entry.getKey());
             }
         }
-        return finalWinners;
     }
-
-    /**
-     * get max score
-     * @param scoreMap a score hashmap
-     * @return the max score
-     */
-    public static Integer getFinalMaxScore(Map<String, Integer> scoreMap){
-        Set<String> nameOfPlayer = scoreMap.keySet();
-        int maxScore = 0;
-        for (String playerName: nameOfPlayer
-        ) {
-            if(scoreMap.get(playerName) > maxScore){
-                maxScore = scoreMap.get(playerName);
+    public void displayRemainingCards(){
+        //System.out.println("\nCards remaining in deck: ");
+        String outputLine = "\nCards remaining in deck: ";
+        resultsOutput.add(outputLine);
+        ArrayList<String> cardsRemaining = new ArrayList<>();
+        if(cardDeck.CardsRemaining(deck) > 0) {
+            cardsRemaining = cardDeck.PrintDeck(deck);
+            for(String card : cardsRemaining){
+                resultsOutput.add(card);
             }
+        } else {
+            //System.out.println("None");
+            outputLine = "None";
+            resultsOutput.add(outputLine);
         }
-        return maxScore;
     }
-
-    /**
-     * print the winner
-     * @param finalMaxScore  max score
-     * @param finalWinners winner name
-     */
-    private static void printFinalResult(int finalMaxScore, List<String> finalWinners) {
-        StringBuilder statement = new StringBuilder("The winner is: ");
-        for (String finalWinner : finalWinners) {
-            statement.append(finalWinner).append(" Score: ").append(finalMaxScore);
+    public void displayScores(){
+        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+            //System.out.println(entry.getKey() + " - " + entry.getValue());
+            String outputLine = entry.getKey() + " - " + entry.getValue();
+            resultsOutput.add(outputLine);
         }
-        System.out.println(statement);
-        System.out.println("Thanks for Playing ");
+        resultsOutput.add("");
     }
 
 }

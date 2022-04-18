@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * simple card deck class
  * @author mohamed
  */
-public class CardDeck {
+public class CardDeck implements Serializable {
     public ArrayList<Card> GenerateDeck(){
         //array list for cards
         ArrayList<Card> cards = new ArrayList<>();
@@ -39,23 +40,17 @@ public class CardDeck {
     }
 
     /**
-     * print all deck cards
-     * @param cards to be printed
+     * @param deck card object in array list
+     * @return
      */
-    public void PrintDeck(ArrayList<Card> cards){
-
-        Iterator<Card> itr = cards.iterator();
-        if (itr.hasNext()) {
-            System.out.print("\nCards in deck: ");
-            while (itr.hasNext()) {
-                Card card = itr.next();
-                System.out.printf(" %d %b ", card.getValue(), card.isWildCard());
-            }
-        }else {
-            System.out.println("no cards in the deck");
-        }
+    public ArrayList<String> PrintDeck(ArrayList<Card> deck){
+        ListIterator<Card> iterator = deck.listIterator();
+        ArrayList<String> cardsRemaining = new ArrayList<>();
+        iterator.forEachRemaining((card) -> {
+            cardsRemaining.add(card.getValue() + " " + card.isWildCard());
+        });
+        return cardsRemaining;
     }
-
     /**
      * the remaining cards in deck
      * @param deck get deck to check

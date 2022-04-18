@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * simple Card class
  * @author mohamed
  */
-public class Card {
+public class Card implements Serializable {
     private final int value;
     private boolean wildCard;
 
