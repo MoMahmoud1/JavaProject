@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -103,7 +102,7 @@ public class OneHundreds {
                 }
             }
         }
-        int winningPlayerIndex = 0;
+        int winningPlayerIndex ;
         if (lowestValuedWildCard == null) {
             Card highestCardInRound = cardsPlayedInRound.get(0);
             for (Card card : cardsPlayedInRound) {
@@ -150,18 +149,18 @@ public class OneHundreds {
 
 
         if (winners.size() > 1){
-            String outputLine = "Winners: ";
-            resultsOutput.add(outputLine);
+            StringBuilder outputLine = new StringBuilder("Winners: ");
+            resultsOutput.add(outputLine.toString());
             int counter = 0;
             for (String winner: winners) {
                 if (counter != winners.size() - 1) {
-                    outputLine += winner + ", ";
+                    outputLine.append(winner).append(", ");
                 } else {
-                    outputLine += winner;
+                    outputLine.append(winner);
                 }
                 counter++;
             }
-            resultsOutput.add(outputLine);
+            resultsOutput.add(outputLine.toString());
         } else {
             String outputLine = "Winner: " + winners.get(0);
             resultsOutput.add(outputLine);
@@ -203,10 +202,14 @@ public class OneHundreds {
             }
         }
     }
+
+    /**
+     * display the remaining card
+     */
     public void displayRemainingCards(){
         String outputLine = "\nCards remaining in deck: ";
         resultsOutput.add(outputLine);
-        ArrayList<String> cardsRemaining = new ArrayList<>();
+        ArrayList<String> cardsRemaining ;
         if(cardDeck.CardsRemaining(deck) > 0) {
             cardsRemaining = cardDeck.PrintDeck(deck);
             resultsOutput.addAll(cardsRemaining);
@@ -215,6 +218,10 @@ public class OneHundreds {
             resultsOutput.add(outputLine);
         }
     }
+
+    /**
+     * display the score
+     */
     public void displayScores(){
         for (Map.Entry<String, Integer> entry : scores.entrySet()) {
             String outputLine = entry.getKey() + " - " + entry.getValue();
