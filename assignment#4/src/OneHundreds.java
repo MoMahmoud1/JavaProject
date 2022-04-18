@@ -148,19 +148,15 @@ public class OneHundreds {
             determineWinners();
         }
 
-//        resultsOutput.add("");
+
         if (winners.size() > 1){
-            //System.out.println("\nWinners: ");
             String outputLine = "Winners: ";
-//            out.println(outputLine);
             resultsOutput.add(outputLine);
             int counter = 0;
             for (String winner: winners) {
                 if (counter != winners.size() - 1) {
-                    //System.out.print(winner + ", ");
                     outputLine += winner + ", ";
                 } else {
-                    //System.out.print(winner + "\n");
                     outputLine += winner;
                 }
                 counter++;
@@ -169,15 +165,10 @@ public class OneHundreds {
         } else {
             String outputLine = "Winner: " + winners.get(0);
             resultsOutput.add(outputLine);
-            //System.out.println("\nWinner: " + winners.get(0));
         }
-
         String outputLine = "Score: " + scores.get(winners.get(0));
         resultsOutput.add(outputLine);
-        //System.out.println("Score: " + scores.get(winners.get(0)));
-
         displayRemainingCards();
-
         if (currentPlayer == 3) {
             currentPlayer = 0;
             currentRound++;
@@ -213,24 +204,19 @@ public class OneHundreds {
         }
     }
     public void displayRemainingCards(){
-        //System.out.println("\nCards remaining in deck: ");
         String outputLine = "\nCards remaining in deck: ";
         resultsOutput.add(outputLine);
         ArrayList<String> cardsRemaining = new ArrayList<>();
         if(cardDeck.CardsRemaining(deck) > 0) {
             cardsRemaining = cardDeck.PrintDeck(deck);
-            for(String card : cardsRemaining){
-                resultsOutput.add(card);
-            }
+            resultsOutput.addAll(cardsRemaining);
         } else {
-            //System.out.println("None");
             outputLine = "None";
             resultsOutput.add(outputLine);
         }
     }
     public void displayScores(){
         for (Map.Entry<String, Integer> entry : scores.entrySet()) {
-            //System.out.println(entry.getKey() + " - " + entry.getValue());
             String outputLine = entry.getKey() + " - " + entry.getValue();
             resultsOutput.add(outputLine);
         }
