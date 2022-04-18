@@ -21,11 +21,10 @@ public class OneHundreds {
         ArrayList<String> resultsOutput = new ArrayList<>();
 
     /**
-     *
-     * @return
-     * @throws InterruptedException
+     * @param player  name of the player
+     * @return card object for the player
      */
-    public Card dealCard(String player) throws InterruptedException {
+    public Card dealCard(String player)  {
         while(true) {
             Card card ;
             if (cardDeck.CardsRemaining(deck) > 0) {

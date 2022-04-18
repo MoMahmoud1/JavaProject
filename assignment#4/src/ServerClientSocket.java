@@ -27,7 +27,7 @@ public class ServerClientSocket implements Runnable{
         socketSetup();
     }
 
-    /** Sets up the input/output streams for the socket */
+    // Sets up the input/output streams for the socket
     public void socketSetup() throws IOException {
         this.out = new PrintWriter(this.socket.getOutputStream(), true);
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -61,12 +61,11 @@ public class ServerClientSocket implements Runnable{
         this.objectOutput.writeObject(game.dealCard(this.socketName));
     }
 
-    /** Synchronized method that handles a round of One Hundreds. It will receive a card from each client and play it
-     * in the game. The game will then determine which player won the round
-     * */
+    // Synchronized method that handles a round of One Hundreds. It will receive a card from each client and play it
+     // in the game. The game will then determine which player won the round
     synchronized void playRound() throws IOException, ClassNotFoundException {
         System.out.println("Thread for " + this.socketName + " in playRound(): " + Thread.currentThread().getName());
-        String inputLine, outputLine;
+        String outputLine;
         if (game.currentRound == 1) {
             outputLine = "Press Enter key to begin!";
         } else {
@@ -82,13 +81,13 @@ public class ServerClientSocket implements Runnable{
 
             game.playRound(cardToPlay);
             if(!this.socketName.equals(game.players.get(game.players.size()-1))){
-                this.out.println("Waiting on opponents...");
+                this.out.println("Waiting for player");
             }
             break;
         }
     }
 
-    /** Synchronized method that displays the results for a round of One Hundreds to each client */
+    //Synchronized method that displays the results for a round of One Hundreds to each client
     synchronized void displayRoundResults(){
         ArrayList<String> results;
         while (true){
@@ -131,9 +130,9 @@ public class ServerClientSocket implements Runnable{
         }
     }
 
-    /** The run method of the class. It will handle all multithread requests as each thread proceeds through the method.
-     * This will make use of game variables to ensure that each threads are in control when they need to be.
-     * */
+    // The run method of the class. It will handle all multithread requests as each thread proceeds through the method.
+    //This will make use of game variables to ensure that each threads are in control when they need to be.
+
     @Override
     public void run() {
         try {
@@ -168,7 +167,7 @@ public class ServerClientSocket implements Runnable{
                         }
                     }
                     if (!this.socketName.equals(game.players.get(0))) {
-                        this.out.println("Waiting on opponents...");
+                        this.out.println("Waiting for player ");
                     }
                     break;
                 } else {
@@ -196,7 +195,7 @@ public class ServerClientSocket implements Runnable{
                                 System.out.println(this.socketName + " is calling displayRoundResults()");
                                 this.displayRoundResults();
                                 if (!this.socketName.equals(game.players.get(0)) && (!(round == 25))) {
-                                    this.out.println("Waiting on opponents...");
+                                    this.out.println("Waiting for player");
                                 }
                             }
                         } else {
