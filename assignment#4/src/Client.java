@@ -3,7 +3,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 
-
 /**
  * simple class to run the client side.
  * @author mohamed

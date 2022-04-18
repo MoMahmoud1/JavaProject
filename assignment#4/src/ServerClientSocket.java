@@ -108,7 +108,7 @@ public class ServerClientSocket implements Runnable{
         }
     }
 
-    /** Synchronized method that displays the results for the entire game of One Hundreds to the client */
+    //Synchronized method that displays the results for the entire game of One Hundreds to the client
     synchronized void displayGameResults(){
         ArrayList<String> results;
         while (true){
