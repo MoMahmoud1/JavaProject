@@ -73,13 +73,13 @@ public class ServerClientSocket implements Runnable{
             outputLine = "Press Enter key to continue!";
         }
         this.out.println(outputLine);
-//        println(outputLine);
+
         while (this.in.readLine() != null) {
-//                System.out.println("Round #" + roundNumber);
+
             outputLine = "Round #" + game.currentRound;
             this.out.println(outputLine);
             Card cardToPlay = (Card) this.objectInput.readObject();
-//            this.out.println(game.players.get(game.currentPlayer) + ": " + cardToPlay.getValue() + cardToPlay.getStatus());
+
             game.playRound(cardToPlay);
             if(!this.socketName.equals(game.players.get(game.players.size()-1))){
                 this.out.println("Waiting on opponents...");
