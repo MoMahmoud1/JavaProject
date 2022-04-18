@@ -1,6 +1,6 @@
 import java.io.*;
 import java.net.Socket;
-
+import java.util.ArrayList;
 
 /**
  * simple class to run the communication between the server and client.
@@ -93,6 +93,27 @@ public class ServerClientSocket implements Runnable{
 
 
     }
+    synchronized void displayRoundResults(){
+        ArrayList<String> results;
+        while (true){
+            if (this.socketName.equals(game.players.get(game.currentPlayer))) {
+                results = game.displayRoundResults();
+                break;
+            } else {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread has been interrupted");
+                }
+            }
+        }
+
+        for (String resultsLine : results){
+            this.out.println(resultsLine);
+        }
+    }
+
+
     /** The run method of the class. It will handle all multithread requests as each thread proceeds through the method.
      * This will make use of game variables to ensure that each threads are in control when they need to be.
      * */
