@@ -41,7 +41,7 @@ public class CardDeck implements Serializable {
 
     /**
      * @param deck card object in array list
-     * @return
+     * @return card
      */
     public ArrayList<String> PrintDeck(ArrayList<Card> deck){
         ListIterator<Card> iterator = deck.listIterator();
